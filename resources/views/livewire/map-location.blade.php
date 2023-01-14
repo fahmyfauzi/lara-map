@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header bg-dark">
+                    <div class="card-header bg-dark text-white">
                         MapBox
                     </div>
                     <div class="card-body">
@@ -14,24 +14,64 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header bg-dark">
+                    <div class="card-header bg-dark text-white">
                         Form
                     </div>
                     <div class="card-body ">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="long">Longtitude</label>
-                                    <input wire:model='long' type="text" class="form-control">
+                        <form wire:submit.prevent="saveLocation">
+                            <div class="row mb-2">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="long">Longtitude</label>
+                                        <input wire:model='long' type="text" class="form-control">
+                                        @error('long')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="lat">Lattitude</label>
+                                        <input wire:model='lat' type="text" class="form-control">
+                                        @error('lat')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="lat">Lattitude</label>
-                                    <input wire:model='lat' type="text" class="form-control">
-                                </div>
+                            <div class="form-group mb-2">
+                                <label for="title">Title</label>
+                                <input wire:model='title' type="text" class="form-control">
+                                @error('title')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
-                        </div>
+                            <div class="form-group mb-2">
+                                <label for="description">Description</label>
+                                <textarea wire:model="description" class="form-control"></textarea>
+                                @error('description')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="image">Picture</label>
+                                <input wire:model="image" type="file" class="form-control">
+                                @if ($image)
+                                <img src="{{ $image->temporaryUrl() }}" class="img-fluid my-2" alt="">
+                                @endif
+                                @if ($imageUrl && !$image)
+                                <img src="{{ asset('/storage/images/'.$imageUrl) }}" class="img-fluid my-2" alt="">
+
+                                @endif
+                                @error('image')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-2">
+                                <button type="submit" class="btn btn-dark text-white btn-block">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -71,6 +111,7 @@
                 markerElement.style.width = '50px';
                 markerElement.style.height = '50px';
 
+                const imageStorage = '{{ asset("/storage/images") }}'+'/'+image;
                 const content = `
                 <div style="overflow-y, auto; max-height:400px, width:100%">
                     <table>
@@ -81,7 +122,7 @@
                             </tr>
                             <tr>
                                 <td>Picture</td>
-                                <td> <img src="${image}" loading="lazy" class="img-fluid" alt=""> </td>
+                                <td> <img src="${imageStorage}" loading="lazy" class="img-fluid" alt=""> </td>
                             </tr>
                             <tr>
                                 <td>Description</td>
@@ -92,6 +133,10 @@
                 </div>
                 
                 `;
+                markerElement.addEventListener('click',(e)=>{
+                    const locationId = e.target.id;
+                    @this.findLocationById(locationId);
+                })
 
                 const popUp = new mapboxgl.Popup({
                     offset:25
@@ -106,6 +151,10 @@
         }
         
         loadLocations({!! $geoJson !!});
+
+        window.addEventListener('locationAdded',(e)=>{
+            loadLocations(JSON.parse(e.detail));
+        })
         map.addControl(new mapboxgl.NavigationControl())
 
         map.on('click',(e)=>{
