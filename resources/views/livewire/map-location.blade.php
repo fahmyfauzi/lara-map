@@ -39,6 +39,8 @@
     </div>
 
 
+
+
 </div>
 @push('scripts')
 
@@ -54,58 +56,8 @@
 
         });
 
-        const geoJson = {
-            
-            "type": "FeatureCollection",
-            "features": [
-                {
-                "type": "Feature",
-                "geometry": {
-                    "coordinates": [
-                    "108.36405451799118",
-                    "-7.176664699675342"
-                    ],
-                    "type": "Point"
-                },
-                "properties": {
-                    "message": "Mantap",
-                    "iconSize": [
-                    50,
-                    50
-                    ],
-                    "locationId": 30,
-                    "title": "Hello new",
-                    "image": "1a1eb1e4106fff0cc3467873f0f39cab.jpeg",
-                    "description": "Mantap"
-                }
-                },
-                {
-                "type": "Feature",
-                "geometry": {
-                    "coordinates": [
-                    "108.33964579097045",
-                    "-7.167149330212794"
-                    ],
-                    "type": "Point"
-                },
-                "properties": {
-                    "message": "oke mantap Edit",
-                    "iconSize": [
-                    50,
-                    50
-                    ],
-                    "locationId": 29,
-                    "title": "Rumah saya Edit",
-                    "image": "0ea59991df2cb96b4df6e32307ea20ff.png",
-                    "description": "oke mantap Edit"
-                }
-                },
 
-                
-            ]
-        }
-
-        const loadLocations = () => {
+        const loadLocations = (geoJson) => {
             geoJson.features.forEach((location) => {
                 const {geometry,properties} = location;
 
@@ -119,14 +71,41 @@
                 markerElement.style.width = '50px';
                 markerElement.style.height = '50px';
 
+                const content = `
+                <div style="overflow-y, auto; max-height:400px, width:100%">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>title</td>
+                                <td>${title}</td>
+                            </tr>
+                            <tr>
+                                <td>Picture</td>
+                                <td> <img src="${image}" loading="lazy" class="img-fluid" alt=""> </td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>${description}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                `;
+
+                const popUp = new mapboxgl.Popup({
+                    offset:25
+                }).setHTML(content).setMaxWidth("400px");
+
                 new mapboxgl.Marker(markerElement)
                 .setLngLat(geometry.coordinates)
+                .setPopup(popUp)
                 .addTo(map)
 
             });
         }
         
-        loadLocations();
+        loadLocations({!! $geoJson !!});
         map.addControl(new mapboxgl.NavigationControl())
 
         map.on('click',(e)=>{
