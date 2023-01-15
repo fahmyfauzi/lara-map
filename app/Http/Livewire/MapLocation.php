@@ -11,6 +11,7 @@ class MapLocation extends Component
 {
     public $long, $lat, $title, $description, $image, $locationId;
     public $geoJson;
+    public $isEdit = false;
     public $imageUrl;
     use WithFileUploads;
 
@@ -94,6 +95,51 @@ class MapLocation extends Component
         $this->title = $location->title;
         $this->description = $location->description;
         $this->imageUrl = $location->image;
+        $this->isEdit = true;
+    }
+
+    public function updateLocation()
+    {
+        $this->validate([
+            'long' => 'required',
+            'lat' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+        $location = Location::findOrFail($this->locationId);
+        if ($this->image) {
+            $imageName = md5($this->image . microtime()) . '.' . $this->image->extension();
+            Storage::putFileAs(
+                'public/images', //penyimpanan
+                $this->image, //sumber
+                $imageName //nama
+            );
+            $updateData = [
+                'title' => $this->title,
+                'description' => $this->description,
+                'image' => $imageName
+            ];
+        } else {
+            $updateData = [
+                'title' => $this->title,
+                'description' => $this->description,
+            ];
+        }
+        $location->update($updateData);
+        $this->imageUrl = "";
+        $this->clearForm();
+        $this->loadLocations();
+        $this->dispatchBrowserEvent('updateLocation', $this->geoJson);
+    }
+
+    public function deleteLocation()
+    {
+        $location = Location::findOrFail($this->locationId);
+        $location->delete();
+        $this->imageUrl = "";
+        $this->clearForm();
+        $this->isEdit = false;
+        $this->dispatchBrowserEvent('deleteLocation', $location->id);
     }
 
     public function render()

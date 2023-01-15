@@ -18,7 +18,9 @@
                         Form
                     </div>
                     <div class="card-body ">
-                        <form wire:submit.prevent="saveLocation">
+
+                        <form @if ($isEdit) wire:submit.prevent="updateLocation" @else
+                            wire:submit.prevent="saveLocation" @endif>
                             <div class="row mb-2">
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -69,7 +71,13 @@
                             </div>
 
                             <div class="form-group mb-2">
-                                <button type="submit" class="btn btn-dark text-white btn-block">Submit</button>
+                                <button type="submit" class="btn btn-dark text-white btn-block">{{ $isEdit ? "Update
+                                    Location" : "Submit Location" }}</button>
+                                @if ($isEdit)
+
+                                <button wire:click="deleteLocation" type="button"
+                                    class="btn btn-danger text-white btn-block">Delete</button>
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -83,7 +91,8 @@
 
 </div>
 @push('scripts')
-
+<script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"
+    integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
 <script>
     document.addEventListener('livewire:load',()=>{
         const defaultLocation = [108.36405451799118,-7.176664699675342];
@@ -154,7 +163,16 @@
 
         window.addEventListener('locationAdded',(e)=>{
             loadLocations(JSON.parse(e.detail));
-        })
+        });
+        window.addEventListener('updateLocation',(e)=>{
+            loadLocations(JSON.parse(e.detail));
+            $('.mapboxgl-popup').remove();
+        });
+        window.addEventListener('deleteLocation',(e)=>{
+            $('.mapboxgl-popup').remove();
+            $('.marker'+e.detail).remove();
+
+        });
         map.addControl(new mapboxgl.NavigationControl())
 
         map.on('click',(e)=>{
