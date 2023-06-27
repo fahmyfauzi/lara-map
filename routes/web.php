@@ -2,6 +2,8 @@
 
 use App\Http\Livewire\MapLocation;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\MapLivewire;
+use App\Models\Location;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +24,11 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/map', MapLocation::class);
+Route::get('/admin/map', MapLocation::class)->middleware('auth');
+Route::get('/', MapLivewire::class);
+
+// show readmore or virtual tour
+Route::get('/{id}', function ($locationId) {
+    $data = Location::where('id', $locationId)->first();
+    return view('show', ['data' => $data]);
+});
