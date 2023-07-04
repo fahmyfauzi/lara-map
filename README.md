@@ -97,3 +97,5 @@ To run the application on your computer, please follow the following command :
 2. admin
 ![222](https://github.com/fahmyfauzi/lara-map/assets/58255031/185438fb-2a38-4593-8a15-192ad106a60a)
 
+3. readmore/virtual tour
+![333](https://github.com/fahmyfauzi/lara-map/assets/58255031/17c02785-f8c8-493e-b048-f0606dbb8fc2)
