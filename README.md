@@ -83,6 +83,7 @@ To run the application on your computer, please follow the following command :
 
     ```sh
     php artisan serve
+    npm run dev
     ```
 
     <p align="right">(<a href="#top">back to top</a>)</p>
@@ -90,5 +91,9 @@ To run the application on your computer, please follow the following command :
 <div id="screenshoot"></div>
 
 ## Screenshoot
+1. users
+![111](https://github.com/fahmyfauzi/lara-map/assets/58255031/44cd8f10-8039-4648-ba90-a00a7e6927c4)
 
-![Screenshot 2023-01-15 182526](https://user-images.githubusercontent.com/58255031/212538311-89311108-a42d-4b58-bf56-92d9e63d04a8.png)
+2. admin
+![222](https://github.com/fahmyfauzi/lara-map/assets/58255031/185438fb-2a38-4593-8a15-192ad106a60a)
+
