@@ -14,8 +14,8 @@
         <div class="row justify-content-center">
             <span class="border-dark rounded rounded-lg border p-2">
 
-                <iframe id="panoee-tour-embeded" name="testing aja" src="https://tour.panoee.com/iframe/testing-aja"
-                    frameborder="0" width="100%" height="500px" scrolling="no" allowvr="yes"
+                <iframe id="panoee-tour-embeded" name="testing aja" src="{{ $data->virtual_tour }}" frameborder="0"
+                    width="100%" height="500px" scrolling="no" allowvr="yes"
                     allow="vr; xr; accelerometer; gyroscope; autoplay;" allowfullscreen="false"
                     webkitallowfullscreen="false" mozallowfullscreen="false" loading="eager"></iframe>
 

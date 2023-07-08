@@ -25,6 +25,7 @@ class MapLivewire extends Component
                 'properties' => [
                     'locationId' => $location->id,
                     'title' => $location->title,
+                    'virtual_tour' => $location->virtual_tour,
                     'image' => $location->image,
                     'description' => $location->description
 

@@ -50,6 +50,13 @@
                                 @enderror
                             </div>
                             <div class="form-group mb-2">
+                                <label for="virtual_tour">URL Virtual Tour</label>
+                                <input wire:model='virtual_tour' type="text" class="form-control">
+                                @error('virtual_tour')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="form-group mb-2">
                                 <label for="description">Description</label>
                                 <textarea wire:model="description" class="form-control" rows="4"></textarea>
                                 @error('description')
@@ -75,7 +82,7 @@
                                 <button type="submit"
                                     class="btn btn-dark btn-block text-white">{{ $isEdit
                                         ? "Update
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Location"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Location"
                                         : 'Submit Location' }}</button>
                                 @if ($isEdit)
                                     <button wire:click="deleteLocation" type="button"
@@ -114,14 +121,13 @@
         document.addEventListener('livewire:load', () => {
             const defaultLocation = [108.36405451799118, -7.176664699675342];
             mapboxgl.accessToken = '{{ env('MAPBOX_KEY') }}';
-            var map = new mapboxgl.Map({
+            let map = new mapboxgl.Map({
                 container: 'map',
                 style: 'mapbox://styles/mapbox/streets-v11',
                 center: defaultLocation,
                 zoom: 11.15
 
             });
-
 
             const loadLocations = (geoJson) => {
                 geoJson.features.forEach((location) => {
@@ -135,7 +141,8 @@
                         locationId,
                         title,
                         image,
-                        description
+                        description,
+                        virtual_tour
                     } = properties;
 
                     let markerElement = document.createElement('div');
@@ -173,14 +180,17 @@
                 </div>
 
                 `;
-                    markerElement.addEventListener('click', (e) => {
-                        const locationId = e.target.id;
-                        @this.findLocationById(locationId);
-                    })
-
                     const popUp = new mapboxgl.Popup({
                         offset: 25
                     }).setHTML(content).setMaxWidth("400px");
+
+                    markerElement.addEventListener('click', (e) => {
+                        const locationId = e.target.id;
+
+                        @this.findLocationById(locationId);
+                    })
+
+
 
                     new mapboxgl.Marker(markerElement)
                         .setLngLat(geometry.coordinates)

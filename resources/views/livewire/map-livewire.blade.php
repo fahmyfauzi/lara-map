@@ -67,8 +67,8 @@
                     markerElement.style.backgroundImage = 'url(' + {!! json_encode($localImagePath) !!} + ')';
 
                     markerElement.style.backgroundSize = 'cover';
-                    markerElement.style.width = '50px';
-                    markerElement.style.height = '50px';
+                    markerElement.style.width = '30px';
+                    markerElement.style.height = '30px';
 
                     const imageStorage = '{{ asset('/storage/images') }}' + '/' + image;
                     const content = `

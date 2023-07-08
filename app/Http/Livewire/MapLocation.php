@@ -9,7 +9,7 @@ use Livewire\WithFileUploads;
 
 class MapLocation extends Component
 {
-    public $long, $lat, $title, $description, $image, $locationId;
+    public $long, $lat, $title, $description, $image, $locationId, $virtual_tour;
     public $geoJson;
     public $isEdit = false;
     public $imageUrl;
@@ -32,7 +32,8 @@ class MapLocation extends Component
                     'locationId' => $location->id,
                     'title' => $location->title,
                     'image' => $location->image,
-                    'description' => $location->description
+                    'description' => $location->description,
+                    'virtual_tour' => $location->virtual_tour,
 
                 ]
             ];
@@ -53,6 +54,7 @@ class MapLocation extends Component
         $this->title = '';
         $this->description = '';
         $this->image = '';
+        $this->virtual_tour = '';
     }
 
     public function saveLocation()
@@ -61,6 +63,7 @@ class MapLocation extends Component
             'long' => 'required',
             'lat' => 'required',
             'title' => 'required',
+            'virtual_tour' => 'required',
             'description' => 'required',
             'image' => 'image|max:2048|required',
         ]);
@@ -76,6 +79,7 @@ class MapLocation extends Component
             'long' => $this->long,
             'lat' => $this->lat,
             'title' => $this->title,
+            'virtual_tour' => $this->virtual_tour,
             'description' => $this->description,
             'image' => $imageName
         ]);
@@ -93,6 +97,7 @@ class MapLocation extends Component
         $this->long = $location->long;
         $this->lat = $location->lat;
         $this->title = $location->title;
+        $this->virtual_tour = $location->virtual_tour;
         $this->description = $location->description;
         $this->imageUrl = $location->image;
         $this->isEdit = true;
@@ -104,6 +109,7 @@ class MapLocation extends Component
             'long' => 'required',
             'lat' => 'required',
             'title' => 'required',
+            'virtual_tour' => 'required',
             'description' => 'required',
         ]);
         $location = Location::findOrFail($this->locationId);
@@ -117,11 +123,13 @@ class MapLocation extends Component
             $updateData = [
                 'title' => $this->title,
                 'description' => $this->description,
+                'virtual_tour' => $this->virtual_tour,
                 'image' => $imageName
             ];
         } else {
             $updateData = [
                 'title' => $this->title,
+                'virtual_tour' => $this->virtual_tour,
                 'description' => $this->description,
             ];
         }
@@ -135,6 +143,7 @@ class MapLocation extends Component
     public function deleteLocation()
     {
         $location = Location::findOrFail($this->locationId);
+        Storage::delete('public/images/' . $location->image);
         $location->delete();
         $this->imageUrl = "";
         $this->clearForm();
