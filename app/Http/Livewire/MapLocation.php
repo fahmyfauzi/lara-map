@@ -115,6 +115,7 @@ class MapLocation extends Component
         $location = Location::findOrFail($this->locationId);
         if ($this->image) {
             $imageName = md5($this->image . microtime()) . '.' . $this->image->extension();
+            Storage::delete('public/images/' . $location->image);
             Storage::putFileAs(
                 'public/images', //penyimpanan
                 $this->image, //sumber
@@ -137,6 +138,7 @@ class MapLocation extends Component
         $this->imageUrl = "";
         $this->clearForm();
         $this->loadLocations();
+        $this->isEdit = false;
         $this->dispatchBrowserEvent('updateLocation', $this->geoJson);
     }
 

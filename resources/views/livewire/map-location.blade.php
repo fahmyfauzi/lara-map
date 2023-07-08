@@ -82,7 +82,7 @@
                                 <button type="submit"
                                     class="btn btn-dark btn-block text-white">{{ $isEdit
                                         ? "Update
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Location"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Location"
                                         : 'Submit Location' }}</button>
                                 @if ($isEdit)
                                     <button wire:click="deleteLocation" type="button"
@@ -115,8 +115,11 @@
     $localImagePath = asset('image/marker.png');
 @endphp
 @push('scripts')
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"
         integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
+
+
     <script>
         document.addEventListener('livewire:load', () => {
             const defaultLocation = [108.36405451799118, -7.176664699675342];
@@ -203,15 +206,41 @@
             loadLocations({!! $geoJson !!});
 
             window.addEventListener('locationAdded', (e) => {
-                loadLocations(JSON.parse(e.detail));
+                swal({
+                    title: "Location Added!",
+                    text: "Your location has been save sucessfully!",
+                    icon: "success",
+                    button: "Ok",
+                }).then((value) => {
+
+                    loadLocations(JSON.parse(e.detail));
+                });
             });
             window.addEventListener('updateLocation', (e) => {
-                loadLocations(JSON.parse(e.detail));
-                $('.mapboxgl-popup').remove();
+                swal({
+                    title: "Location Updated!",
+                    text: "Your location has been updated!",
+                    icon: "success",
+                    button: "Ok",
+                }).then((value) => {
+                    loadLocations(JSON.parse(e.detail));
+                    $('.mapboxgl-popup').remove();
+                });
+
             });
             window.addEventListener('deleteLocation', (e) => {
-                $('.mapboxgl-popup').remove();
-                $('.marker' + e.detail).remove();
+                swal({
+                    title: "Location Updated!",
+                    text: "Your location has been updated!",
+                    icon: "success",
+                    button: "Ok",
+                }).then((value) => {
+                    loadLocations({!! $geoJson !!});
+
+                    $('.mapboxgl-popup').remove();
+                    $('.marker' + e.detail).remove();
+                });
+
 
             });
             map.addControl(new mapboxgl.NavigationControl())
