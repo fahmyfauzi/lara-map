@@ -79,7 +79,13 @@ To run the application on your computer, please follow the following command :
     ```sh
     php artisan migrate
     ```
-10. Running project
+    
+10. Install package
+    ```
+    npm install
+    npm run build
+    ```
+11. Running project
 
     ```sh
     php artisan serve
