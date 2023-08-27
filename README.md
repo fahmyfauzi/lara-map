@@ -1,107 +1,93 @@
-<div id="top"></div>
+# GIS and Virtual Tour
+Sebuah proyek sederhana yang dikembangkan dari tutorial YouTube: @TahuCoding
 
-# Laramap
+## features
+- Map
+- Virtual Tour
+- Dashboard Manage Map
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about">About The Project</a>
-         <ul>
-        <li><a href="#features">Features</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#installation">Installation</a>
-    </li> 
-    <li>
-      <a href="#screenshoot">Screenshoot</a>
-    </li>
-  </ol>
-</details>
 
-<p id="about">
-This system is built with the laravel 9 framework , laravel livewire and using MapBox.
-</p>
+## requirements
+- php 8.0.2
+- database mysql
+- laravel 10.0
+- laragon
+- chrome
+- composer
+- [MapBox](mapbox.com)
+- [Panoee](panoee.com)
 
-<h4 id="features">
-    The features of this system globally include:
-</h4>
-<ul>
-    <li>
-       Simple without reload.
-    </li>
-    
-</ul>
-
-## Installation
-
-To run the application on your computer, please follow the following command :
-
-1. Clone the repo
+## installation
+1. Clone repositori
     ```sh
-    git clone https://github.com/fahmyfauzi/lara-map.git
+    git https://github.com/fahmyfauzi/lara-map.git
     ```
-2. Change directory in project which already clone
+2. masuk ke dalam directori
     ```sh
     cd lara-map
     ```
-3. Install Composer packages
+3. Instal composer
     ```sh
     composer install
+    or
+    composer update
     ```
-4. Create database on your computer
-5. Create a copy of your .env file
-    ```sh
+4. Copy file .env.example 
+    ```
     cp .env.example .env
     ```
-7. Generate an app encryption key
+4. Generate an app encryption key
 
     ```sh
     php artisan key:generate
     ```
+5. Create database on your computer or phpMyAdmin
 6. In the .env file, add database information to allow Laravel to connect to the database
-    ```sh
+    ```
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
     DB_PORT=3306
-    DB_DATABASE=DB_NAME
+    DB_DATABASE=laravel_didamelid
     DB_USERNAME=DB_USERNAME
     DB_PASSWORD=DB_PASSWORD
     ```
-
-8. Change mapbox key on .env
-    ```sh
-       MAPBOX_KEY=YOUR_KEY_MAPBOX
-    ```
-9. Migrate database
-    ```sh
-    php artisan migrate
-    ```
     
-10. Install package
+6. Change mapbox key on .env
+    ```
+    MAPBOX_KEY=YOUR_KEY_MAPBOX
+    ```
+
+7. migrasi database
+    ```
+    php artisan migrate 
+    ```
+8. install package
     ```
     npm install
     npm run build
     ```
-11. Running project
-
+    
+9. jalankan project
     ```sh
-    php artisan serve
-    npm run dev
+   php artisan serve
     ```
 
-    <p align="right">(<a href="#top">back to top</a>)</p>
 
-<div id="screenshoot"></div>
+## usage
+- buka chrome masukan url ```lara-map.test``` atau ``` http://127.0.0.1:8000/ ```
+- akses ```lara-map.test/login``` atau ``` lara-map.test/register ``` untuk register
+- login dan coba fitur-fiturnya
 
-## Screenshoot
-1. users
-![111](https://github.com/fahmyfauzi/lara-map/assets/58255031/44cd8f10-8039-4648-ba90-a00a7e6927c4)
+## credits
 
-2. admin
-![222](https://github.com/fahmyfauzi/lara-map/assets/58255031/185438fb-2a38-4593-8a15-192ad106a60a)
+[Fahmy Fauzi ](https://github.com/fahmyfauzi)
 
-3. readmore/virtual tour
-![333](https://github.com/fahmyfauzi/lara-map/assets/58255031/17c02785-f8c8-493e-b048-f0606dbb8fc2)
+## screanshot
+- Halaman Utama
+  ![Uploading Screenshot (247).png…]()
+
+- Halaman Readmore atau Virtual Tour
+  ![eb1ea3bd-eec7-44b2-92e3-125bafb45a6d](https://github.com/fahmyfauzi/lara-map/assets/58255031/64849bdc-c8a6-4144-8737-21cdd100b124)
+
+- Halaman Admin Dashboard
+  ![Screenshot (248)](https://github.com/fahmyfauzi/lara-map/assets/58255031/323cf73d-43c3-40a0-a054-c3ec93fff894)
