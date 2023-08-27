@@ -84,7 +84,7 @@ Sebuah proyek sederhana yang dikembangkan dari tutorial YouTube: @TahuCoding
 
 ## screanshot
 - Halaman Utama
-  ![Uploading Screenshot (247).png…]()
+  ![Screenshot (247)](https://github.com/fahmyfauzi/lara-map/assets/58255031/38d8ecb4-c988-4d53-a1b3-c67ae96452c2)
 
 - Halaman Readmore atau Virtual Tour
   ![eb1ea3bd-eec7-44b2-92e3-125bafb45a6d](https://github.com/fahmyfauzi/lara-map/assets/58255031/64849bdc-c8a6-4144-8737-21cdd100b124)
