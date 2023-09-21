@@ -3,9 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header bg-dark text-white">
-                        MapBox
-                    </div>
+
                     <div class="card-body">
                         <div wire:ignore id='map' style='width: 100%; height: 80vh;'></div>
                     </div>
@@ -26,15 +24,13 @@
         }
     </style>
 @endpush
-@php
-    $localImagePath = asset('image/marker.png');
-@endphp
+
 @push('scripts')
     <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"
         integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
     <script>
         document.addEventListener('livewire:load', () => {
-            const defaultLocation = [108.36405451799118, -7.176664699675342];
+            const defaultLocation = [108.21189532485045, -7.330317292259124];
             mapboxgl.accessToken = '{{ env('MAPBOX_KEY') }}';
             var map = new mapboxgl.Map({
                 container: 'map',
@@ -64,11 +60,10 @@
                     let markerElement = document.createElement('div');
                     markerElement.className = 'marker' + locationId;
                     markerElement.id = locationId;
-                    markerElement.style.backgroundImage = 'url(' + {!! json_encode($localImagePath) !!} + ')';
-
+                    markerElement.style.backgroundImage = 'url(' + '/storage/images/' + image + ')';
                     markerElement.style.backgroundSize = 'cover';
-                    markerElement.style.width = '30px';
-                    markerElement.style.height = '30px';
+                    markerElement.style.width = '200px';
+                    markerElement.style.height = '130px';
 
                     const imageStorage = '{{ asset('/storage/images') }}' + '/' + image;
                     const content = `
